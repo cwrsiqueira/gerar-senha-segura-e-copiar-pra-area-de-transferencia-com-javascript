@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerar Senha e Copiar</title>
+</head>
+
+<body>
+    <h1>Gerar Senha e Copiar</h1>
+
+    <label for="charQt">Quantidade de Caracteres</label> <br>
+    <input type="number" name="charQt" id="charQt" value="4" min="4" max="64" style="margin-bottom: 5px;"> <br>
+    <button onclick="gerarSenha()">Gerar Senha</button>
+
+    <hr>
+    <p id="password"></p>
+
+    <p id="success" style="display: none;">Senha copiada para área de transferência.</p>
+
+    <div class="copy-button-area" style="display: none;">
+        <hr>
+        <button onclick="copiarSenha()">Copiar Senha</button>
+    </div>
+
+
+    <script>
+        function gerarSenha() {
+            let charQt = document.querySelector('#charQt').value;
+
+            if (charQt < 4 || charQt > 64) {
+                alert('A senha deve ter entre 4 e 64 caracteres.');
+                document.querySelector('#charQt').value = charQt < 4 ? 4 : 64;
+                return false;
+            }
+
+            let smallLetters = 'abcdefghijklmnopqrstuvwxyz';
+            let capitalLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let numbers = '0123456789';
+            let specialChars = '!@#$%&*()_+-=';
+            let password = shuffle(smallLetters).substr(0, 1) + shuffle(capitalLetters).substr(0, 1) + shuffle(numbers).substr(0, 1) + shuffle(specialChars).substr(0, 1);
+
+            for (let i = 1; i < charQt; i++) {
+                password += shuffle(smallLetters).substr(0, 1) + shuffle(capitalLetters).substr(0, 1) + shuffle(numbers).substr(0, 1) + shuffle(specialChars).substr(0, 1);
+            }
+
+            document.querySelector('#password').innerHTML = shuffle(password.substr(0, charQt));
+            document.querySelector('.copy-button-area').style.display = 'block';
+        }
+
+        function shuffle(text) {
+            var parts = text.split('');
+            for (var i = parts.length; i > 0;) {
+                var random = parseInt(Math.random() * i);
+                var temp = parts[--i];
+                parts[i] = parts[random];
+                parts[random] = temp;
+            }
+            return parts.join('');
+        }
+
+        function copiarSenha() {
+            let password = document.querySelector('#password').textContent;
+            navigator.clipboard.writeText(password).then(() => {
+                document.querySelector('#success').style.display = 'block';
+                document.querySelector('#success').style.color = 'green';
+            })
+        }
+    </script>
+</body>
+
+</html>
