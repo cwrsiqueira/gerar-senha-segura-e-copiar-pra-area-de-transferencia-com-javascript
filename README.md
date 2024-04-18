@@ -2,4 +2,4 @@
 
 Seja um(a) patrocinador(a) e contribua para eu continar trazendo conteúdos de qualidade e gratuitos.
 
-Video no youtube desenvolvendo esse projeto:
+Video no youtube desenvolvendo esse projeto: https://youtu.be/tjFh83IY4hE
